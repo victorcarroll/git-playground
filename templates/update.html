@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Update status of an existing entry</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Update ID Status:</h2>
+        <form action="{{url_for('updated')}}" method="POST">>
+            <p>The ID you selected is: {{Items.id}}, {{Items.status}}, {{Items.title}}</p>
+            <input type = "text" name = 'Status_update' value="{{Items.status}}">
+            <input type = "text" name = 'Id' value="{{Items.id}}">
+            <input type="submit" name="Update ID Status!">
+        </form>
+    </div>
+  </div>
+{% endblock %}

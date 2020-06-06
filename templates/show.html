@@ -9,11 +9,11 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Current Items:</h2>
+      <h2>Show item using specific ID</h2>
       <ul class="list-group mb-4">
-           {% for Items in Items %}
-            <li>{{Items['id']}}. {{Items['status']}}: {{Items['title']}}</li>
-           {% endfor %}
+        <p>The ID you selected is: {{Items.id}}, {{Items.status}}, {{Items.title}}</p>
+        <a href="{{url_for('update', id=Items.id)}}"> Mark item as complete! </a>
+        <a href="{{url_for('delete', id=Items.id)}}"> Delete this item! </a>
       </ul>
     </div>
   </div>
