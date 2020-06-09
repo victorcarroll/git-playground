@@ -46,29 +46,17 @@ def update(id):
     found_id = session.get_item(id)
     return render_template('update.html', Items=found_id)
 
-
-#### BELOW DOESNT WORK :( Returns back to index page but updated status from form is not saved... even after calling save_item
-#####HELP HELP###
+##FIXED BELOW. THANKS!
 
 @app.route('/items/updated', methods = ["GET", "POST"])
 def updated():
     if request.method == 'POST':
-        passed_id = request.form['Id']
+        passed_id = int(request.form['Id'])
         updated_status = request.form['Status_update']
         a = session.get_item(passed_id)
         item = {'id': passed_id, 'status': updated_status, 'title': a['title']}
         update_item = session.save_item(item)
         return redirect(url_for('index'))
-##       update_item = session.save_item(item)
-##        return render_template('update.html')
-
-
-
-#    if request.method == 'POST':
-#       update_item = session.save_item((request.form['Status_update']))
-#       found_item = session.save_item(item)    ##calling save_item function for id
-#    return redirect(url_for('index'))
-#    return render_template('index.html', Items=session.get_items())
 
 
 if __name__ == '__main__':

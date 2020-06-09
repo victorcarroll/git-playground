@@ -10,6 +10,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Current Items:</h2>
+      <a href="{{url_for('new')}}"> Click here to add new item </a>
       <ul class="list-group mb-4">
            {% for Items in Items %}
             <li>{{Items['id']}}. {{Items['status']}}: {{Items['title']}}</li>
