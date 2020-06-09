@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Delete an existing entry</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Update ID Status:</h2>
+        <form method = "DELETE" action="{{url_for('delete')}}">
+            <input type="submit" value="X">
+        </form>
+    </div>
+  </div>
+{% endblock %}

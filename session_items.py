@@ -54,6 +54,21 @@ def add_item(title):
     return item
 
 
+def delete_item(id):
+    items = get_items()
+    a = next((item for item in items if item['id'] == int(id)), None)
+    if not a:
+        return None
+    # id = items[-1]['id'] + 1 if items else 0
+    # print(id, type(id))
+    # item = { 'id': a['id'], 'title': a['title'], 'status': a['status'] }
+
+    # remove the item to the list
+    items.remove(a)
+    session['items'] = items
+
+    return a
+
 def save_item(item):
     """
     Updates an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
