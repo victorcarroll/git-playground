@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 import session_items as session
+import requests
+import os
+import trelloapp
+import json
 
 app = Flask(__name__)
 app.config.from_object('flask_config.Config')
@@ -58,6 +62,66 @@ def updated():
         update_item = session.save_item(item)
         return redirect(url_for('index'))
 
+#@app.route('/items/get_all_cards', methods = ["GET"])
+def getAll(): 
+    resp = trelloapp.get_all_cards()
+    #print(resp)
+    resp_json = json.loads(resp)
+    for cards in resp_json:   
+        print(cards['name'])
+getAll()
+
+#    all_cards = []
+#   all_cards = resp[0]['name']
+#    for result in resp:
+#        name = resp['name']
+#        all_cards.append({
+#            'Card_Name': result['name']
+#        })
+#    print(result[0])
+
+
+    #return render_template('all_items.html', all_cards=all_cards)
+
+
+
+
+# #Module2 project #
+# APP_KEY = os.environ.get('APP_KEY')
+# APP_TOKEN=os.environ.get('APP_TOKEN')
+# board_id= '83tSYoun'
+# url = 'https://api.trello.com/1/cards/{id}'
+# headers = {"Accept": "application/json"}
+# query = {"key": APP_KEY, "token": APP_TOKEN}
+
+# response=requests.request("GET", url, headers=headers, params=query)
+# print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
+
+#CONTROL K U / CONTROL K C
+# def get_card_from_list(card_id):
+#    parameters = {"key": APP_KEY, "token": APP_TOKEN}
+#    response = request.get(url, % card_id, params=parameters)
+
+#    if response.status_code == 200: 
+#        resp = response.json()
+#        myToDo = []
+#        for result in resp['all']:
+#            myToDo.append({
+#                'CardID': result["idList"],
+#                'CardName': result["name"]
+#            })
+#        return render_template("trello-api.html", myToDo=myToDo)
+#    else: 
+#        return f"There is a problem with the request" 
+
+#@app.route('/ToDo/CreateCard')
+#def create_card(list_id, card_name): 
+#    url_card = f'https://api.trello.com/1/cards'
+#    parameters = {"name": card_name, "idList": list_id, "key": APP_KEY, "token": APP_TOKEN}
+#    response = requests.request("POST", url_card, params=parameters)
+#    card_id = response.json()['id']
+#    return card_id
+ 
 
 if __name__ == '__main__':
     app.run(debug=True)
