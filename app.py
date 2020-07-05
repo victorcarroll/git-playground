@@ -10,8 +10,10 @@ app.config.from_object('flask_config.Config')
 
 @app.route('/') #redirect root to the url or route mapped to the index function
 def root():
-    return redirect(url_for('index'))
+    return redirect(url_for('getAll')) ## replaced index
 
+## All route from below up to module is NO LONGER applicable since replacing index 
+## with getAll from Module 2. Keep for reference No longer calling session.py
 @app.route('/items', methods = ["GET", "POST", "PUT"])
 def index():
     if request.method == 'POST':
@@ -62,27 +64,44 @@ def updated():
         update_item = session.save_item(item)
         return redirect(url_for('index'))
 
-#@app.route('/items/get_all_cards', methods = ["GET"])
+
+### Module 2 stuff ### 
+
+@app.route('/items/get_all_cards', methods = ["GET"])
 def getAll(): 
-    resp = trelloapp.get_all_cards()
+    resp = trelloapp.get_all_cards_from_board()
+    resp_list = trelloapp.get_all_lists_from_board()
     #print(resp)
     resp_json = json.loads(resp)
+    resp_json_list = json.loads(resp_list)
     for cards in resp_json:   
         print(cards['name'])
-getAll()
+    for lists in resp_json_list:   
+        print(lists['id'] + lists['name'])
+    return render_template('all_items.html', all_cards = resp_json)
 
-#    all_cards = []
-#   all_cards = resp[0]['name']
-#    for result in resp:
-#        name = resp['name']
-#        all_cards.append({
-#            'Card_Name': result['name']
-#        })
-#    print(result[0])
+@app.route('/complete_item', methods = ['POST', 'GET'])
+def complete_item():
+    if request.method == 'POST':
+        card_name = request.form['card_name']
+        card_id = request.form['card_id']
+        
+        trelloapp.move_card_to_done(card_id)
+    return "COMPLETED, PLEASE CHECK TRELLO PAGE FOR UPDATE!"
+
+# return the list ID from resp_json_list for name "Done"
+# call update function from trellop to update the listID for cardID
 
 
-    #return render_template('all_items.html', all_cards=all_cards)
 
+# list ID, card ID, card Name
+
+#getAll()
+
+#pass the list name and card name into complete_item
+#@app.route('/items/complete_item', methods = ["GET"])
+#def update_to_done():
+#    resp = trellopapp.
 
 
 

@@ -6,15 +6,17 @@
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
   </div>
-
   <div class="row">
     <div class="col-md-12">
       <h2>Current Items from Trello:</h2>
-      <ul class="list-group mb-4">
            {% for all_cards in all_cards %}
-            <li>{{all_cards['Card_Name']}}</li>
-           {% endfor %}
-      </ul>
+           <form action="{{url_for('complete_item')}}" method="POST">
+            <input type ='text' name='card_name' value="{{all_cards['name']}}" readonly="readonly">
+            <input type = 'text' name="list_id" value="{{all_cards['idList']}}" readonly="readonly">
+            <input type = 'text' name ="card_id" value="{{all_cards['id']}}" readonly="readonly">
+            <input type="submit" name = 'card_name' value="Mark as Done" onsubmit="{{ url_for('complete_item')}}"> 
+           </form>          
+            {% endfor %}
     </div>
   </div>
 {% endblock %}
